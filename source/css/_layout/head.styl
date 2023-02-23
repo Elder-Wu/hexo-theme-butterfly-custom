@@ -7,11 +7,15 @@
   background-repeat: no-repeat
   transition: all .5s
 
+  //& - 当前元素
+  //:not(.not-top-img) - 不包含.not-top-img的元素
+  //:before - 在元素之前插入内容
+  //插入内容为黑色透明度30%的遮罩层
   &:not(.not-top-img):before
-    position: absolute
-    width: 100%
-    height: 100%
-    background-color: alpha($dark-black, .3)
+    //position: absolute
+    //width: 100%
+    //height: 100%
+    //background-color: alpha($dark-black, .3)
     content: ''
 
   // index
