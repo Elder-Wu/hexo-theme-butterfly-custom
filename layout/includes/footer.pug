@@ -13,5 +13,7 @@
       span.footer-separator |
       span= _p('footer.theme') + ' '
       a(href='https://github.com/jerryc127/hexo-theme-butterfly')= 'Butterfly'
-  if theme.footer.custom_text
-    .footer_custom_text!=`${theme.footer.custom_text}`
+  
+  // 显示网站最后更新时间
+  - var now = new Date()
+  .footer_custom_text Last Update At #{now.getFullYear()}-#{('0' + (now.getMonth() + 1)).slice(-2)}-#{('0' + now.getDate()).slice(-2)} #{('0' + now.getHours()).slice(-2)}:#{('0' + now.getMinutes()).slice(-2)}:#{('0' + now.getSeconds()).slice(-2)}
