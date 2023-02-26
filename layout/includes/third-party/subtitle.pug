@@ -35,7 +35,7 @@ case source
             if (!{effect}) {
               const from = '出自 ' + data.from
               const sub = !{JSON.stringify(subContent)}
-              sub.unshift(data.hitokoto, from)
+              sub.unshift(data.hitokoto, "")
               typedJSFn.init(sub)
             } else {
               document.getElementById('subtitle').innerHTML = data.hitokoto
