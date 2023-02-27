@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const adjustMenu = init => {
     const getAllWidth = ele => {
       let width = 0
-      ele.length && Array.from(ele).forEach(i => { width += i.offsetWidth })
+      ele.length && Array.from(ele).forEach(i => {
+        width += i.offsetWidth
+      })
       return width
     }
 
@@ -102,7 +104,9 @@ document.addEventListener('DOMContentLoaded', function () {
           const prevEle = ctx.previousElementSibling
           prevEle.innerText = GLOBAL_CONFIG.copy.success
           prevEle.style.opacity = 1
-          setTimeout(() => { prevEle.style.opacity = 0 }, 700)
+          setTimeout(() => {
+            prevEle.style.opacity = 0
+          }, 700)
         }
       } else {
         if (GLOBAL_CONFIG.Snackbar !== undefined) {
@@ -133,9 +137,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const $nextEle = [...ele.parentNode.children].slice(1)
       ele.firstChild.classList.toggle('closed')
       if (btf.isHidden($nextEle[$nextEle.length - 1])) {
-        $nextEle.forEach(e => { e.style.display = 'block' })
+        $nextEle.forEach(e => {
+          e.style.display = 'block'
+        })
       } else {
-        $nextEle.forEach(e => { e.style.display = 'none' })
+        $nextEle.forEach(e => {
+          e.style.display = 'none'
+        })
       }
     }
 
@@ -149,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
       this.classList.toggle('expand-done')
     }
 
-    function createEle (lang, item, service) {
+    function createEle(lang, item, service) {
       const fragment = document.createDocumentFragment()
 
       if (isShowTool) {
@@ -180,7 +188,9 @@ document.addEventListener('DOMContentLoaded', function () {
         $figureHighlight.forEach(function (item) {
           const langName = item.getAttribute('data-language') ? item.getAttribute('data-language') : 'Code'
           const highlightLangEle = `<div class="code-lang">${langName}</div>`
-          btf.wrap(item, 'figure', { class: 'highlight' })
+          btf.wrap(item, 'figure', {
+            class: 'highlight'
+          })
           createEle(highlightLangEle, item)
         })
       } else {
@@ -194,7 +204,9 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       if (isPrismjs) {
         $figureHighlight.forEach(function (item) {
-          btf.wrap(item, 'figure', { class: 'highlight' })
+          btf.wrap(item, 'figure', {
+            class: 'highlight'
+          })
           createEle('', item)
         })
       } else {
@@ -208,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /**
    * PhotoFigcaption
    */
-  function addPhotoFigcaption () {
+  function addPhotoFigcaption() {
     document.querySelectorAll('#article-container img').forEach(function (item) {
       const parentEle = item.parentNode
       const altValue = item.title || item.alt
@@ -278,9 +290,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const addJustifiedGallery = () => {
       ele.forEach(item => {
-        item.classList.contains('url')
-          ? fetchUrl(item.textContent).then(res => { runJustifiedGallery(item, res) })
-          : runJustifiedGallery(item, JSON.parse(item.textContent))
+        item.classList.contains('url') ?
+          fetchUrl(item.textContent).then(res => {
+            runJustifiedGallery(item, res)
+          }) :
+          runJustifiedGallery(item, JSON.parse(item.textContent))
       })
     }
 
@@ -294,34 +308,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
-   * rightside scroll percent
-   */
-  const rightsideScrollPercent = currentTop => {
-    const perNum = btf.getScrollPercent(currentTop, document.body)
-    const $goUp = document.getElementById('go-up')
-    if (perNum < 95) {
-      $goUp.classList.add('show-percent')
-      $goUp.querySelector('.scroll-percent').textContent = perNum
-    } else {
-      $goUp.classList.remove('show-percent')
-    }
-  }
-
-  /**
    * 滾動處理
    */
   const scrollFn = function () {
-    const $rightside = document.getElementById('rightside')
-    const innerHeight = window.innerHeight + 56
-
-    // 當滾動條小于 56 的時候
-    if (document.body.scrollHeight <= innerHeight) {
-      $rightside.style.cssText = 'opacity: 1; transform: translateX(-58px)'
-      return
-    }
-
     // find the scroll direction
-    function scrollDirection (currentTop) {
+    function scrollDirection(currentTop) {
       const result = currentTop > initTop // true is down & false is up
       initTop = currentTop
       return result
@@ -332,42 +323,30 @@ document.addEventListener('DOMContentLoaded', function () {
     const $header = document.getElementById('page-header')
     const isChatBtnHide = typeof chatBtnHide === 'function'
     const isChatBtnShow = typeof chatBtnShow === 'function'
-    const isShowPercent = GLOBAL_CONFIG.percent.rightside
 
     const scrollTask = btf.throttle(() => {
       const currentTop = window.scrollY || document.documentElement.scrollTop
       const isDown = scrollDirection(currentTop)
-      if (currentTop > 56) {
-        if (isDown) {
-          if ($header.classList.contains('nav-visible')) $header.classList.remove('nav-visible')
-          if (isChatBtnShow && isChatShow === true) {
-            chatBtnHide()
-            isChatShow = false
-          }
-        } else {
+      if (isDown) {
+        if (currentTop < 1000) {
+          //距离小于1000，显示导航
           if (!$header.classList.contains('nav-visible')) $header.classList.add('nav-visible')
-          if (isChatBtnHide && isChatShow === false) {
-            chatBtnShow()
-            isChatShow = true
-          }
+        } else {
+          //距离大于1000，不显示导航
+          if ($header.classList.contains('nav-visible')) $header.classList.remove('nav-visible')
         }
-        $header.classList.add('nav-fixed')
-        if (window.getComputedStyle($rightside).getPropertyValue('opacity') === '0') {
-          $rightside.style.cssText = 'opacity: 0.8; transform: translateX(-58px)'
+        if (isChatBtnShow && isChatShow === true) {
+          chatBtnHide()
+          isChatShow = false
         }
       } else {
-        if (currentTop === 0) {
-          $header.classList.remove('nav-fixed', 'nav-visible')
+        if (!$header.classList.contains('nav-visible')) $header.classList.add('nav-visible')
+        if (isChatBtnHide && isChatShow === false) {
+          chatBtnShow()
+          isChatShow = true
         }
-        $rightside.style.cssText = "opacity: ''; transform: ''"
       }
-
-      isShowPercent && rightsideScrollPercent(currentTop)
-
-      if (document.body.scrollHeight <= innerHeight) {
-        $rightside.style.cssText = 'opacity: 0.8; transform: translateX(-58px)'
-      }
-    }, 200)
+    },200)
 
     window.scrollCollect = scrollTask
 
@@ -375,8 +354,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
-  * toc,anchor
-  */
+   * toc,anchor
+   */
   const scrollFnToDo = function () {
     const isToc = GLOBAL_CONFIG_SITE.isToc
     const isAnchor = GLOBAL_CONFIG.isAnchor
@@ -493,97 +472,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
-   * Rightside
-   */
-  const rightSideFn = {
-    switchReadMode: () => { // read-mode
-      const $body = document.body
-      $body.classList.add('read-mode')
-      const newEle = document.createElement('button')
-      newEle.type = 'button'
-      newEle.className = 'fas fa-sign-out-alt exit-readmode'
-      $body.appendChild(newEle)
-
-      function clickFn () {
-        $body.classList.remove('read-mode')
-        newEle.remove()
-        newEle.removeEventListener('click', clickFn)
-      }
-
-      newEle.addEventListener('click', clickFn)
-    },
-    switchDarkMode: () => { // Switch Between Light And Dark Mode
-      const nowMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
-      if (nowMode === 'light') {
-        activateDarkMode()
-        saveToLocal.set('theme', 'dark', 2)
-        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
-      } else {
-        activateLightMode()
-        saveToLocal.set('theme', 'light', 2)
-        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
-      }
-      // handle some cases
-      typeof utterancesTheme === 'function' && utterancesTheme()
-      typeof changeGiscusTheme === 'function' && changeGiscusTheme()
-      typeof FB === 'object' && window.loadFBComment && window.loadFBComment()
-      typeof runMermaid === 'function' && window.runMermaid()
-    },
-    showOrHideBtn: (e) => { // rightside 點擊設置 按鈕 展開
-      const rightsideHideClassList = document.getElementById('rightside-config-hide').classList
-      rightsideHideClassList.toggle('show')
-      if (e.classList.contains('show')) {
-        rightsideHideClassList.add('status')
-        setTimeout(() => {
-          rightsideHideClassList.remove('status')
-        }, 300)
-      }
-      e.classList.toggle('show')
-    },
-    scrollToTop: () => { // Back to top
-      btf.scrollToDest(0, 500)
-    },
-    hideAsideBtn: () => { // Hide aside
-      const $htmlDom = document.documentElement.classList
-      $htmlDom.contains('hide-aside')
-        ? saveToLocal.set('aside-status', 'show', 2)
-        : saveToLocal.set('aside-status', 'hide', 2)
-      $htmlDom.toggle('hide-aside')
-    },
-
-    runMobileToc: () => {
-      if (window.getComputedStyle(document.getElementById('card-toc')).getPropertyValue('opacity') === '0') window.mobileToc.open()
-      else window.mobileToc.close()
-    }
-  }
-
-  document.getElementById('rightside').addEventListener('click', function (e) {
-    const $target = e.target.id ? e.target : e.target.parentNode
-    switch ($target.id) {
-      case 'go-up':
-        rightSideFn.scrollToTop()
-        break
-      case 'rightside_config':
-        rightSideFn.showOrHideBtn($target)
-        break
-      case 'mobile-toc-button':
-        rightSideFn.runMobileToc()
-        break
-      case 'readmode':
-        rightSideFn.switchReadMode()
-        break
-      case 'darkmode':
-        rightSideFn.switchDarkMode()
-        break
-      case 'hide-aside-btn':
-        rightSideFn.hideAsideBtn()
-        break
-      default:
-        break
-    }
-  })
-
-  /**
    * menu
    * 側邊欄sub-menu 展開/收縮
    */
@@ -605,10 +493,10 @@ document.addEventListener('DOMContentLoaded', function () {
       let textFont; const copyFont = window.getSelection(0).toString()
       if (copyFont.length > copyright.limitCount) {
         textFont = copyFont + '\n' + '\n' + '\n' +
-        copyright.languages.author + '\n' +
-        copyright.languages.link + window.location.href + '\n' +
-        copyright.languages.source + '\n' +
-        copyright.languages.info
+          copyright.languages.author + '\n' +
+          copyright.languages.link + window.location.href + '\n' +
+          copyright.languages.source + '\n' +
+          copyright.languages.info
       } else {
         textFont = copyFont
       }
@@ -649,7 +537,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const $table = document.querySelectorAll('#article-container :not(.highlight) > table, #article-container > table')
     if ($table.length) {
       $table.forEach(item => {
-        btf.wrap(item, 'div', { class: 'table-wrap' })
+        btf.wrap(item, 'div', {
+          class: 'table-wrap'
+        })
       })
     }
   }
