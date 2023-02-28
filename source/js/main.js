@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function () {
           isChatShow = true
         }
       }
-    },200)
+    },0)
 
     window.scrollCollect = scrollTask
 
