@@ -2,9 +2,11 @@ if hexo-config('preloader.enable') && hexo-config('preloader.source') == 1
   .loading-bg
     position: fixed
     z-index: 1000
-    width: 50%
+    width: 100%
     height: 100%
-    background: radial-gradient(49.19% 88.28% at 72.99% 113.54%, rgba(93, 227, 236, 0.73) 0%, rgba(93, 227, 236, 0.1679) 59.78%, rgba(93, 227, 236, 0) 100%), linear-gradient(54.57deg, #862AB1 8.59%, rgba(185, 91, 230, 0) 80.49%), radial-gradient(118.75% 118.75% at 96.65% 74.22%, #308EE6 0%, rgba(48, 158, 230, 0) 73.91%), radial-gradient(114.51% 155.86% at 9.82% 10.94%, rgba(255, 85, 85, 0.7) 0%, rgba(255, 85, 85, 0.147) 61.98%, rgba(255, 85, 85, 0) 100%, #F2F5FA); background-blend-mode: hard-light,darken,normal,normal,normal,normal; filter: blur(1px);
+    background: radial-gradient(49.19% 88.28% at 72.99% 113.54%, rgba(93, 227, 236, 0.73) 0%, rgba(93, 227, 236, 0.1679) 59.78%, rgba(93, 227, 236, 0) 100%), linear-gradient(54.57deg, #862AB1 8.59%, rgba(185, 91, 230, 0) 80.49%), radial-gradient(118.75% 118.75% at 96.65% 74.22%, #308EE6 0%, rgba(48, 158, 230, 0) 73.91%), radial-gradient(114.51% 155.86% at 9.82% 10.94%, rgba(255, 85, 85, 0.7) 0%, rgba(255, 85, 85, 0.147) 61.98%, rgba(255, 85, 85, 0) 100%, #F2F5FA); 
+    background-blend-mode: hard-light,darken,normal,normal,normal,normal;
+    filter: blur(50px);
 
   #loading-box
     .loading-left-bg
@@ -53,15 +55,59 @@ if hexo-config('preloader.enable') && hexo-config('preloader.source') == 1
 
     &.loaded
       .loading-left-bg
-        transition: all .2s
-        transform: translate(-200%, 0)
+        //animation: fade 2s forwards
+        //transform: translate(-200%, 0)
+        animation: slide-and-fade 1s forwards ease-in-out;
 
       .loading-right-bg
-        transition: all .2s
-        transform: translate(200%, 0)
+        //animation: fade 2s forwards
+        //transform: translate(200%, 0)
+        animation: slide-and-fade 1s forwards ease-in-out;
 
       .spinner-box
         display: none
+
+  @keyframes slide-and-fade {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    50% {
+      opacity: 0;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-200%);
+    }
+  }
+
+  @keyframes moveToLeft {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes moveToRight {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 
   @keyframes configure-clockwise
     0%
