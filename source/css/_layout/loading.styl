@@ -57,15 +57,25 @@ if hexo-config('preloader.enable') && hexo-config('preloader.source') == 1
       .loading-left-bg
         //animation: fade 2s forwards
         //transform: translate(-200%, 0)
-        animation: slide-and-fade 1s forwards ease-in-out;
+        animation: slide-and-fade .5s forwards;
 
       .loading-right-bg
         //animation: fade 2s forwards
         //transform: translate(200%, 0)
-        animation: slide-and-fade 1s forwards ease-in-out;
+        animation: slide-and-fade .5s forwards;
 
       .spinner-box
-        display: none
+        //display: none
+        animation: slide-and-fade .5s forwards
+
+  @keyframes fade-and-slide {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 
   @keyframes slide-and-fade {
     0% {
