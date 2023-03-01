@@ -118,20 +118,8 @@ pangu:
   name: pangu
   file: dist/browser/pangu.min.js
   version: 4.0.7
-fancybox_css_v4:
-  name: '@fancyapps/ui'
-  file: dist/fancybox.css
-  version: 4.0.31
-  other_name: fancyapps-ui
-fancybox_v4:
-  name: '@fancyapps/ui'
-  file: dist/fancybox.umd.js
-  version: 4.0.31
-  other_name: fancyapps-ui
-medium_zoom:
-  name: medium-zoom
-  file: dist/medium-zoom.min.js
-  version: 1.0.8
+
+
 snackbar_css:
   name: node-snackbar
   file: dist/snackbar.min.css

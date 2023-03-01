@@ -328,13 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTop = window.scrollY || document.documentElement.scrollTop
       const isDown = scrollDirection(currentTop)
       if (isDown) {
-        if (currentTop < 1000) {
-          //距离小于1000，显示导航
-          if (!$header.classList.contains('nav-visible')) $header.classList.add('nav-visible')
-        } else {
-          //距离大于1000，不显示导航
-          if ($header.classList.contains('nav-visible')) $header.classList.remove('nav-visible')
-        }
+        if ($header.classList.contains('nav-visible')) $header.classList.remove('nav-visible')
         if (isChatBtnShow && isChatShow === true) {
           chatBtnHide()
           isChatShow = false
@@ -346,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function () {
           isChatShow = true
         }
       }
-    },0)
+    }, 0)
 
     window.scrollCollect = scrollTask
 
@@ -390,9 +384,9 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault()
         const target = e.target.classList
         if (target.contains('toc-content')) return
-        const $target = target.contains('toc-link')
-          ? e.target
-          : e.target.parentElement
+        const $target = target.contains('toc-link') ?
+          e.target :
+          e.target.parentElement
         btf.scrollToDest(btf.getEleTop(document.getElementById(decodeURI($target.getAttribute('href')).replace('#', ''))), 300)
         if (window.innerWidth < 900) {
           window.mobileToc.close()
@@ -437,7 +431,9 @@ document.addEventListener('DOMContentLoaded', function () {
       detectItem = currentIndex
 
       if (isToc) {
-        $cardToc.querySelectorAll('.active').forEach(i => { i.classList.remove('active') })
+        $cardToc.querySelectorAll('.active').forEach(i => {
+          i.classList.remove('active')
+        })
 
         if (currentId === '') {
           return
@@ -490,7 +486,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const copyright = GLOBAL_CONFIG.copyright
     document.body.oncopy = (e) => {
       e.preventDefault()
-      let textFont; const copyFont = window.getSelection(0).toString()
+      let textFont;
+      const copyFont = window.getSelection(0).toString()
       if (copyFont.length > copyright.limitCount) {
         textFont = copyFont + '\n' + '\n' + '\n' +
           copyright.languages.author + '\n' +
@@ -674,7 +671,9 @@ document.addEventListener('DOMContentLoaded', function () {
       btf.isHidden(document.getElementById('toggle-menu')) && mobileSidebarOpen && sidebarFn.close()
     })
 
-    document.getElementById('menu-mask').addEventListener('click', e => { sidebarFn.close() })
+    document.getElementById('menu-mask').addEventListener('click', e => {
+      sidebarFn.close()
+    })
 
     clickFnOfSubMenu()
     GLOBAL_CONFIG.islazyload && lazyloadImg()
@@ -709,7 +708,9 @@ document.addEventListener('DOMContentLoaded', function () {
     tabsFn.clickFnOfTabs()
     tabsFn.backToTop()
     switchComments()
-    document.getElementById('toggle-menu').addEventListener('click', () => { sidebarFn.open() })
+    document.getElementById('toggle-menu').addEventListener('click', () => {
+      sidebarFn.open()
+    })
   }
 
   refreshFn()

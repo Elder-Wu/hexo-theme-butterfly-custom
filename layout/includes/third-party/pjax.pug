@@ -3,7 +3,7 @@ if theme.pjax.exclude
   each val in theme.pjax.exclude
     - pjaxExclude = pjaxExclude + `:not([href="${val}"])`
 
-- let pjaxSelectors = ['head > title','#config-diff','#body-wrap','#rightside-config-hide','#rightside-config-show','.js-pjax']
+- let pjaxSelectors = ['head > title','#config-diff','#body-wrap','.js-pjax']
 
 - let choose = theme.comments.use
 if choose
@@ -30,8 +30,6 @@ script.
     window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
     window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
 
-    document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
-    
     if (window.aplayers) {
       for (let i = 0; i < window.aplayers.length; i++) {
         if (!window.aplayers[i].options.fixed) {
